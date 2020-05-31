@@ -1,3 +1,5 @@
+#Thank you to Levente Buttyan (CrySyS Labs) for the design
+
 import sys, getopt
 import Crypto.Cipher.AES
 import Crypto.Util.Counter
