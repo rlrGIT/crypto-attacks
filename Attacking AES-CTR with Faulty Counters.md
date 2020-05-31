@@ -19,9 +19,18 @@ Thus if any part of $X$ is known, then $X'$ is also known, by taking the XOR of 
 
 If counters are not properly initialized, chosen plaintext attacks can be used to reveal information about encrypted messages. Consider  a piece of plaintext "Hello world". If counters do not take into account some random seed to change values each time a communication session is initialized, it becomes easy to predict the value of the counter, especially after the counter is first initialized. This can be used to create counter collisions, and allow us to access information about plaintext.
 $$
-X' = E_k(ctr_i) + X
+X' = E_k(ctr_i) + X \\
+Y' = E_k(ctr_i) + Y \\
+\\
+X' + Y' = E_k(ctr_i) + X + E_k(ctr_i) + Y \\
+= 0 + X + Y \\
+= X + Y \\
+\\
+(X + Y) + X = Y
 $$
 
+
+Suppose we have some unknown cipher text Y'. We happen to know that Y' was produced when the counter was first initialized. If this is the case, if we could choose some plaintext X, which is composed of a message of only spaces, we could produce the cipher text for X, and use that to execute this attack:
 
 
 
