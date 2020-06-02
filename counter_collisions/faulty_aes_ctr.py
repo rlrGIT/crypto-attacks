@@ -23,9 +23,7 @@ for opt, arg in opts:
       inputfile = arg
    elif opt == "-o":
       outputfile = arg
-#print 'Key string is "', keystring
-#print 'Input file is "', inputfile
-#print 'Output file is "', outputfile
+
 
 if len(keystring) != 16:
    print('Error: key string must be 16 character long')
@@ -42,28 +40,26 @@ if len(outputfile) == 0:
 ifile = open(inputfile, "rb")
 ofile = open(outputfile, "wb")
 
-ctr = Crypto.Util.Counter.new(128)
-cipher = Crypto.Cipher.AES.new(keystring.encode("ASCII"), Crypto.Cipher.AES.MODE_CTR, counter=ctr)
+ctr = Counter.new(128)
+cipher = AES.new(keystring.encode("ASCII"), AES.MODE_CTR, counter=ctr)
 
 eof = False
 while (eof == False):
     plainblock = ifile.read(16)
     if len(plainblock) == 16:
-        #print plainblock.encode("hex")
         cipherblock = cipher.encrypt(plainblock)
         ofile.write(cipherblock)
     else:
         eof = True       
         if len(plainblock) > 0:
             # padding to fit block size
-            plainblock += b'\x00'
+            plainblock += b'\x80'
             for i in range(16-len(plainblock)):
-                plainblock += b'\x01'
-            # print plainblock.encode("hex")
+                plainblock += b'\x00'
             cipherblock = cipher.encrypt(plainblock) 
             ofile.write(cipherblock)
+
 ifile.close() 
 ofile.close()
 
 print('Done.')
-
