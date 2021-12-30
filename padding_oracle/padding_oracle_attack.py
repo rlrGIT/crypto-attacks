@@ -1,3 +1,4 @@
+# Starter code provided by Levente Buttyan
 from Crypto.Cipher import DES
 from Crypto.Util.strxor import strxor
 from base64 import b64decode
